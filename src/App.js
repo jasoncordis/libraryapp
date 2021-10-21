@@ -7,7 +7,7 @@ export default function App() {
     <div className="container">
       <h1>Hello, audio player!</h1>
       <AudioPlayer
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        src="greatgatsby.mp3"
         // Try other props!
       />
     </div>
