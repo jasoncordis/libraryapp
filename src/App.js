@@ -1,15 +1,31 @@
-import "./styles.css";
-import AudioPlayer from "react-h5-audio-player";
-import "react-h5-audio-player/lib/styles.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.js";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./App.css";
+import LogIn from "./components/Login/LogIn";
+import DashBoard from "./components/DashBoard/DashBoard";
+import Register from "./components/Register/Register";
+import { ProtectedRoute } from "./ProtectedRoute";
+import Page404 from "./components/Page404/Page404";
+import AboutApp from "./components/AboutApp/AboutApp";
+import TheGreatGatsby from "./components/TheGreatGatsby";
 
-export default function App() {
+function App() {
   return (
-    <div className="container">
-      <h1>Hello, audio player!</h1>
-      <AudioPlayer
-        src="catalog_items/audiobooks/greatgatsby_ch1.mp3"
-        // Try other props!
-      />
+    <div>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={LogIn} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/gatsby" exact component={TheGreatGatsby} />
+          <ProtectedRoute exact path="/dashboard" component={DashBoard} />
+          <Route path="*" component={Page404} />
+        </Switch>
+      </Router>
+      <AboutApp />
     </div>
   );
 }
+
+export default App;

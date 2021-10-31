@@ -1,12 +1,18 @@
-import { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App'
+import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from 'react-router-dom'
+const app = (<BrowserRouter>
+    <App></App>
+</BrowserRouter>)
 
-import App from "./App";
+ReactDOM.render(app, document.getElementById('root'));
 
-const rootElement = document.getElementById("root1");
-ReactDOM.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-  rootElement
-);
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
+
+
