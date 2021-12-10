@@ -25,7 +25,8 @@ class Viewer extends React.Component {
     movies: [],
     books: [],
     magazines: [],
-    journals: []
+    journals: [],
+    newRating: 0,
   };
 
   componentDidMount = () => {
@@ -269,7 +270,7 @@ class Viewer extends React.Component {
         return itemArr[i].user_rating;
       }
     }
-  }
+  }  
 
 
   getDate = (date) => {
@@ -306,7 +307,7 @@ class Viewer extends React.Component {
       return(  
       <div>
       <input class = "inputComment" type="text" id="comment"></input>
-      <button class = "addComment" onClick={() => {this.postComment(this.state.user, this.state.loanAuthenticated)}}>Add Comment</button>
+      <button class = "addComment" onClick={() => {this.postComment(this.state.user, this.state.newRating)}}>Add Comment</button>
       </div>
       )
     }
@@ -338,13 +339,19 @@ class Viewer extends React.Component {
   }
 
 
-  postComment = (user) => {
+  postComment = (user, newRating) => {
     var today = new Date;
     var today = today.toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
     var itemArr = Object.values(user);
     console.log(itemArr);
+    
+    var rating = 0;
+    if(newRating != 0)
+      rating = newRating;
+    else
+      rating = this.getRating(itemArr[2], this.state.ratings)
 
-    document.getElementById("comments").innerHTML = "<div id = 'userComment' class = 'userComment'>   <p>  " + document.getElementById('comment').value + "</p> <p> posted by: " + itemArr[1] + "</p> <p> " + today + "</p> </div> " +  document.getElementById("comments").innerHTML
+    document.getElementById("comments").innerHTML = "<div id = 'userComment' class = 'userComment'>   <p>  " + document.getElementById('comment').value + "</p> <p> Rating: " + rating + "</p> <p> posted by: " + itemArr[1] + "</p> <p> " + today + "</p> </div> " +  document.getElementById("comments").innerHTML
 
     const test = {user_comment: document.getElementById('comment').value, catalogID: id, libraryID: itemArr[2], date_posted: today}
     const config = {
@@ -357,6 +364,7 @@ class Viewer extends React.Component {
   }
 
   postRating = (user, rating) => {
+    this.setState({ newRating: rating })
     var today = new Date;
     var today = today.toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
     var itemArr = Object.values(user);
