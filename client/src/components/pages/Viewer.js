@@ -188,7 +188,7 @@ class Viewer extends React.Component {
       const bookArr = Object.values(books);
       console.log(bookArr);
 
-      if((magazines.length !=0 || journals.length!=0) && itemArr[0].itemURL != null){
+      if((magazines.length !=0 || journals.length!=0) && itemArr[0].itemURL != null && itemArr.length!=0){
         const viewSDKClient = new ViewSDKClient();
         var bookURL = process.env.PUBLIC_URL + itemArr[0].itemURL
         viewSDKClient.ready().then(() => {
@@ -209,7 +209,7 @@ class Viewer extends React.Component {
         )
       }
 
-      if(movies.length != 0 && itemArr[0].itemURL != null)
+      if(movies.length != 0 && itemArr[0].itemURL != null && itemArr.length!=0)
         return(
           <div className = "viewerVideo">
           <video src = {itemArr[0].itemURL} controls width="500">
