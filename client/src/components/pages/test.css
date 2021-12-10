@@ -1,0 +1,56 @@
+:root {
+  --cardWidth: 1100px;
+  --card1Width: 300px;
+  --cardHeight: 340px;
+  --cardMargin: 16px;
+}
+
+.imagediv {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.itemImage{
+  height: 320px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica;
+  width: 100%;
+}
+
+.welcome {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.card1 {
+  width: var(--cardWidth);
+  height: var(--cardHeight);
+  margin: var(--cardMargin);
+}
+.card2 {
+  width: var(--card1Width);
+  height: var(--cardHeight);
+  margin: var(--cardMargin);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
+.item_description{
+  height: 175px;
+  overflow: auto;
+}
