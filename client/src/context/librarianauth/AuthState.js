@@ -26,7 +26,7 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Function to load user. (Will check to see which user is logged in by hitting the auth endpoint to get the user data.)
-  const loadUser = async () => {
+  const loadUser1 = async () => {
     // Loads token into global headers.
     setAuthToken(localStorage.token);
     console.log("loaduser");
@@ -58,7 +58,7 @@ const AuthState = (props) => {
         payload: res.data,
       });
 
-      loadUser();
+      loadUser1();
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
@@ -68,7 +68,7 @@ const AuthState = (props) => {
   };
 
   // Function to log in user. (Will log the user in for the application and get a token for the user.)
-  const login = async (formData) => {
+  const login1 = async (formData) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -83,17 +83,18 @@ const AuthState = (props) => {
         payload: res.data,
       });
 
-      loadUser();
+      loadUser1();
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
         payload: err.response.data.msg,
       });
     }
+    window.location = '/librarian';
   };
 
   // Function to log out user. (Will destroy the user's token and clear any logged in user.)
-  const logout = () => {
+  const logout1 = () => {
     dispatch({ type: LOGOUT });
   };
 
@@ -106,14 +107,14 @@ const AuthState = (props) => {
     <AuthContext.Provider
       value={{
         token: state.token,
-        isAuthenticated: state.isAuthenticated,
+        isAuthenticated1: state.isAuthenticated,
         loading: state.loading,
-        user: state.user,
+        user1: state.user,
         error: state.error,
         register,
-        loadUser,
-        login,
-        logout,
+        loadUser1,
+        login1,
+        logout1,
         clearErrors,
       }}
     >

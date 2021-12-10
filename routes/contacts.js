@@ -43,6 +43,53 @@ router.get("/viewer", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  // Errors object that is sent through the backend and sends the user a 400 error if the requirements for the user model are not met.
+    console.log("heyyyy")
+    const {
+      catalogID,
+      added_by_librarianID,
+      Title, 
+      date_published,
+      item_description,
+      itemURL,
+      imageURL,
+      date_item_added} = req.body;
+
+    console.log(req.body)
+
+    item = new Contact({
+      catalogID,
+      added_by_librarianID,
+      Title, 
+      date_published,
+      item_description,
+      itemURL,
+      imageURL,
+      date_item_added
+    });
+
+    console.log(item);
+
+    await item.save();
+
+  } 
+);
+
+
+router.get("/delete", async (req, res) => {
+  try {
+    console.log(req.query.catalogID);
+    catalogID = req.query.catalogID;
+    await Contact.deleteMany({catalogID: catalogID})
+    console.log(catalogID);
+
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // POST route with "api/contacts" endpoint to add a new contact. Private access.
 router.post(
   "/",

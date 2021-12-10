@@ -5,6 +5,16 @@
   --cardMargin: 16px;
 }
 
+.tableDiv {
+  padding-top:10px;
+}
+
+
+.subTableDiv {
+  float:left; 
+  padding-right: 10px;
+}
+
 .imagediv {
   display:flex;
   align-items:center;

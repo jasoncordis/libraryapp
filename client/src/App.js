@@ -9,10 +9,13 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import LibrarianLogin from "./components/auth/LibrarianLogin";
 import LibrarianRegister from "./components/auth/LibrarianRegister";
+import Librarian from "./components/pages/Librarian";
+
 
 import Alerts from "./components/layout/Alerts";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import PrivateRoute1 from "./components/routing/PrivateRoute1";
+import PrivateRoute2 from "./components/routing/PrivateRoute2";
 
 import AuthState from "./context/auth/AuthState";
 import LibraryAuthState from "./context/librarianauth/AuthState";
@@ -37,6 +40,7 @@ const App = () => {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/liblogin" component={LibrarianLogin} />
                     <Route exact path="/libregister" component={LibrarianRegister} />
+                    <PrivateRoute2 exact path="/librarian" component={Librarian} />
                     <Route exact path="/test" component={About} />
                   </Switch>
                 </div>

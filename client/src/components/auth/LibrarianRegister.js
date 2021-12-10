@@ -10,7 +10,7 @@ const LibrarianRegister = (props) => {
 
 
   const { setAlert } = alertContext;
-  const { register, error, clearErrors, isAuthenticated } = authContext;
+  const { register1, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -42,7 +42,7 @@ const LibrarianRegister = (props) => {
     } else if (document.getElementById("password").value !== document.getElementById("password2").value) {
       setAlert("Passwords do not match.", "danger");
     } else {
-      register({
+      register1({
         user_name,
         librarianID:randomID,
         password,

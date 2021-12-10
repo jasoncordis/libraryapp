@@ -11,6 +11,11 @@
   padding: 0;
 }
 
+input[type=number] { 
+  height: 30px;
+  width: 400px;
+}
+
 .addComment{
 }
 
@@ -416,6 +421,25 @@ button {
 }
 
 .form-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+
+.editCatalog {
+  max-width: 600px;
+  margin: 2rem auto;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+
+.viewerVideo {
+  text-align: center;
+}
+
+
+.form-container1 {
   max-width: 500px;
   margin: 2rem auto;
   overflow: hidden;

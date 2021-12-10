@@ -144,6 +144,16 @@ class Home extends React.Component {
     })
     .catch(() => {
     });
+
+    axios.get('/api/librarianauth')
+    .then((response) => {
+      const data = response.data;
+      this.setState({ librarian: data });
+      console.log('User has been received!!');
+      console.log(data.librarianID);
+    })
+    .catch(() => {
+    });
   };
 
   authenticateUserLoans = () => {
@@ -235,12 +245,30 @@ class Home extends React.Component {
 
   }
 
-  catalogButtons = (loans, id, user) => {
+  catalogButtons = (loans, id, user, librarian) => {
     var borrow = id.toString();
     var viewReturn = id.toString();
 
-    if(user!= null){
-      var userArr = Object.values(user);
+    if(librarian != null){
+      var libArr = Object.values(librarian);
+      if(libArr.length!=0)
+      return(
+        <div>Go to the <a href = "/librarian"> librarian page </a> to access the catalog. </div>
+      )
+    }
+
+    if(user != null){
+    var userArr = Object.values(user);
+
+    if(librarian != null){
+      var libArr = Object.values(librarian);
+      if(libArr.length!=0)
+      return(
+        <div>Go to the <a href = "/librarian"> librarian page </a> to access the catalog. </div>
+      )
+    }
+
+    if(userArr.length!= 0){
       if(loans!=null){
         var itemArr = Object.values(loans);
         console.log(itemArr);
@@ -274,6 +302,7 @@ class Home extends React.Component {
       )
     }
   }
+  }
 
   displayBlogPost = (posts) => {
     if(posts!=null){
@@ -291,7 +320,7 @@ class Home extends React.Component {
             <p>{post.item_description}</p>
             </div>
             <div class = "catalogButtons">
-            {this.catalogButtons(this.state.loans, post.catalogID, this.state.user)}
+            {this.catalogButtons(this.state.loans, post.catalogID, this.state.user, this.state.librarian)}
             </div>
           </div>
           </>

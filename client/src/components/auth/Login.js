@@ -50,12 +50,12 @@ const Login = (props) => {
       </h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label htmlFor="libraryID">Library ID</label>
+          <label htmlFor="libraryID">Library ID </label> <p></p>
           <input type="number" name="libraryID" onChange={onChange} />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input
+          <input class = "passwordInput"
             type="password"
             name="password"
             value={password}

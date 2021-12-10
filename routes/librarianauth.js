@@ -17,6 +17,9 @@ router.get("/", auth, async (req, res) => {
   // Passed in auth as a second parameter in order to make it a protected route.
   try {
     const user = await Librarian.findById(req.user.id).select("-password");
+    console.log(req.user.id);
+    console.log("helloooooo");
+    console.log(user);
     res.json(user);
   } catch (err) {
     console.error(err.message);

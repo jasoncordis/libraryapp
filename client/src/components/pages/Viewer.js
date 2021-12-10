@@ -23,7 +23,9 @@ class Viewer extends React.Component {
     user: [],
     users: [],
     movies: [],
-    books: []
+    books: [],
+    magazines: [],
+    journals: []
   };
 
   componentDidMount = () => {
@@ -119,6 +121,34 @@ class Viewer extends React.Component {
       .catch(() => {
         alert('Error retrieving data!!!');
       });
+
+      axios.get('/api/journals/viewer', {
+        params: {
+          id: id
+        }
+      })
+      .then((response) => {
+        const data = response.data;
+        this.setState({ journals: data });
+        console.log('Journals have been received!!');
+      })
+      .catch(() => {
+        alert('Error retrieving data!!!');
+      });
+
+      axios.get('/api/magazines/viewer', {
+        params: {
+          id: id
+        }
+      })
+      .then((response) => {
+        const data = response.data;
+        this.setState({ magazines: data });
+        console.log('Magazines have been received!!');
+      })
+      .catch(() => {
+        alert('Error retrieving data!!!');
+      });
   
       axios.get('/api/books/viewer', {
         params: {
@@ -151,15 +181,39 @@ class Viewer extends React.Component {
     }
   }
 
-  getViewer = (movies, posts, books, loanAuthenticated) => {
+  getViewer = (movies, posts, books, magazines, journals, loanAuthenticated) => {
     if(loanAuthenticated == 1){
       const itemArr = Object.values(posts);
       const bookArr = Object.values(books);
       console.log(bookArr);
-      if(movies.length != 0)
+
+      if((magazines.length !=0 || journals.length!=0) && itemArr[0].itemURL != null){
+        const viewSDKClient = new ViewSDKClient();
+        var bookURL = process.env.PUBLIC_URL + itemArr[0].itemURL
+        viewSDKClient.ready().then(() => {
+          viewSDKClient.previewFile(
+            "ebook",
+            {
+              defaultViewMode: "FIT_WIDTH",
+              showAnnotationTools: false,
+              showLeftHandPanel: false,
+              showPageControls: false,
+              showDownloadPDF: false,
+              showPrintPDF: false,
+            }, bookURL
+          );
+        });
         return(
-          <video src = {itemArr[0].itemURL} controls width="250">
+          <div class = "ebook" id = "ebook"></div>
+        )
+      }
+
+      if(movies.length != 0 && itemArr[0].itemURL != null)
+        return(
+          <div className = "viewerVideo">
+          <video src = {itemArr[0].itemURL} controls width="500">
         </video>
+          </div>
         )
       else if(books.length!=0 && itemArr.length!=0){
           if(bookArr[0].type == 'audiobook'){
@@ -319,6 +373,32 @@ class Viewer extends React.Component {
 
   }
 
+  getInfo = (movies, posts, books, magazines, journals, loanAuthenticated) => {
+    if(loanAuthenticated == 1){
+
+      const itemArr = Object.values(posts);
+      const bookArr = Object.values(books);
+      console.log(bookArr);
+
+      if((magazines.length !=0) && itemArr[0].itemURL != null){
+        const magArr = Object.values(magazines);
+        return(<div><h1>{itemArr[0].Title}, Volume {magArr[0].volume} Issue {magArr[0].issue}</h1></div>)
+    }
+    else if((journals.length !=0) && itemArr[0].itemURL != null){
+      const journArr = Object.values(journals);
+      return(<div><h1>{itemArr[0].Title}, Volume {journArr[0].volume} Issue {journArr[0].issue}, published by {journArr[0].published_by}</h1></div>)
+  }
+    else if((books.length !=0) && itemArr[0].itemURL != null){
+      const bookArr = Object.values(books);
+      return(<div><h1>{itemArr[0].Title} by {bookArr[0].author}</h1></div>)
+  }
+  else if((movies.length !=0) && itemArr[0].itemURL != null){
+    const movieArr = Object.values(movies);
+    return(<div><h1>{itemArr[0].Title}, Directed by {movieArr[0].director} </h1></div>)
+}
+    }
+  }
+
 
   render() {
     console.log('State: ', this.state);
@@ -326,7 +406,8 @@ class Viewer extends React.Component {
     //JSX
     return(
       <div className="app">
-      {this.getViewer(this.state.movies, this.state.posts, this.state.books, this.state.loanAuthenticated)}
+      <div id = "titleInfo">{this.getInfo(this.state.movies, this.state.posts, this.state.books,  this.state.magazines,  this.state.journals, this.state.loanAuthenticated)}</div>
+      {this.getViewer(this.state.movies, this.state.posts, this.state.books,  this.state.magazines,  this.state.journals, this.state.loanAuthenticated)}
       {this.postCommentSetup(this.state.loanAuthenticated)}
       {this.ratingSetup(this.state.loanAuthenticated)}
       <div id = "comments">
